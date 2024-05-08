@@ -1,16 +1,15 @@
-const http = require("http");
 const express = require("express");
-const fs = require("fs");
-const route = require("./routes");
-// console.log(route.role)
 
-const server = http.createServer(route);
+const app = express();
 
-server.listen(3000);
+app.use((req, res, next) => {
+  console.log("Hello from ExpressJS");
+  next();
+});
 
-/*
-1-> syntax error: Typo's
-2-> Rutime error: 
-3-> Logical error: Get the o/p but not an expected output.
-*/
+app.use((req, res, next) => {
+  console.log("Second middleware function");
+  res.send("<h1>Hello from Express Server</h1>");
+});
 
+app.listen(3000);
