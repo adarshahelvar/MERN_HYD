@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%=  product.title  %></title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <nav class="nav">
+        <li><a href="/">Shop</a></li>
+        <li><a href="/admin/add-product">Add Product</a></li>
+      </nav>
+    <h1>Product Info page</h1>
+    <main>
+      <h1><%= product.title %></h1>
+      <img
+        src="data:image/webp;base64,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"
+        alt=""
+      />
+      <h2>$199.99</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, maiores?
+      </p>
+    </main>
+  </body>
+</html>

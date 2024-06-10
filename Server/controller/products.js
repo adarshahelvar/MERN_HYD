@@ -12,14 +12,3 @@ exports.postAddProduct = (req, res, next) => {
   res.redirect("/");
 };
 
-exports.getProducts = (req, res, next) => {
-  Product.fetchAllProducts((products) => {
-    res.render("shop", {
-      prods: products,
-      pageTitle: "Shop page",
-      path: "/",
-      hasProducts: products.lenghth > 0,
-      activeShop: true,
-    });
-  });
-};
