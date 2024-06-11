@@ -9,6 +9,7 @@
   <body>
     <nav class="nav">
         <li><a href="/">Shop</a></li>
+        <li><a href="/getCart">Cart</a></li>
         <li><a href="/admin/add-product">Add Product</a></li>
       </nav>
     <h1>Product Info page</h1>
@@ -22,6 +23,10 @@
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, maiores?
       </p>
+      <form action="/cart" method="POST">
+        <button>Add-To-Cart</button>
+        <input  type="hidden" name="productId" value="<%= product.id %>"/>
+      </form>
     </main>
   </body>
 </html>
