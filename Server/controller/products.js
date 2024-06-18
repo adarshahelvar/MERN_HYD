@@ -7,8 +7,15 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const product = new Product(req.body.title); // intence and instantiation
-  product.save();
-  res.redirect("/");
+  const title = req.body.title;
+  const product = new Product({ title: title });
+  product
+    .save()
+    .then((result) => {
+      console.log("Products created successfully...");
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
-

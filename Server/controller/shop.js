@@ -2,7 +2,7 @@ const Cart = require("../models/cart");
 const Product = require("../models/product");
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAllProducts((products) => {
+  Product.find().then((products) => {
     res.render("shop", {
       prods: products,
       pageTitle: "Shop page",
@@ -15,9 +15,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.getSingleProduct = (req, res, next) => {
   const productId = req.params.id;
-  // console.log(productId);
-  Product.findById(productId, (product) => {
-    // console.log(product);
+  Product.findById(productId).then((product) => {
     res.render("productDetails", {
       product: product,
     });

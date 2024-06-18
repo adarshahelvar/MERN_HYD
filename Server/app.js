@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const { getProducts } = require("./controller/products");
 const { error } = require("./controller/error");
+const mongoose = require("mongoose");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -19,4 +20,9 @@ app.use(shopRoutes);
 
 app.use(error);
 
-app.listen(3000);
+mongoose
+  .connect(
+    `mongodb+srv://adarshaadi1997:ecomhyd@cluster0.y9scjih.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+  )
+  .then(console.log("Database connection established"), app.listen(3000))
+  .catch((err) => console.log(err));
