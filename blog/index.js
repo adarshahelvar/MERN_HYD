@@ -19,6 +19,14 @@ const connectDB = async () => {
   }
 };
 
+app.use(cors({
+  origin: function (origin, callback){
+    return callback(null, true);
+  },
+  optionsSuccessStatus: 200,
+  credentials: true,
+}))
+
 app.use(express.json());
 app.use("/auth", authRoute);
 app.use("/blog", blogRoute);
