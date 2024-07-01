@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoute from "./routes/authRoute.js";
 import blogRoute from "./routes/blogRoute.js";
+import userRoute from "./routes/userRoute.js";
 
 dotenv.config();
 const app = express();
@@ -19,17 +20,20 @@ const connectDB = async () => {
   }
 };
 
-app.use(cors({
-  origin: function (origin, callback){
-    return callback(null, true);
-  },
-  optionsSuccessStatus: 200,
-  credentials: true,
-}))
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      return callback(null, true);
+    },
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use("/auth", authRoute);
 app.use("/blog", blogRoute);
+app.use("/user", userRoute);
 
 connectDB().then(() => {
   app.listen(port), console.log(`app is listening on port ${port}`);
