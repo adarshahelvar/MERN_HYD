@@ -9,6 +9,8 @@ export const authenticate = (req, res, next) => {
       .status(401)
       .json({ success: false, message: "Token does not exist" });
   }
+
+  
   try {
     const token = authToken.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);

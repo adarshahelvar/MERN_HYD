@@ -85,3 +85,31 @@ export const deleteBlog = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
+export const updateBlog = async (req, res) => {
+  const id = req.params.id;
+  //   console.log(id);
+  try {
+    const updateBlog = await Blog.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updateBlog) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not foud...!" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Blog info updated...",
+      data: updateBlog,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update Blog...!" });
+  }
+};

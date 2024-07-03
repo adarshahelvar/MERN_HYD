@@ -53,3 +53,23 @@ export const getAllUser = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
+export const getSingleUserProfile = async (req, res, next) => {
+  const idUser = req.userId;
+  // console.log(idUser);
+  try {
+    const user = await User.findById(idUser);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    const { password, ...rest } = user._doc;
+    res
+      .status(200)
+      .json({ success: true, message: "User info found", data: { ...rest } });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+};
