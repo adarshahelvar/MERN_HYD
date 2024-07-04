@@ -9,7 +9,7 @@ import {
 import { authenticate, restrict } from "../auth/verifyToken.js";
 
 const router = express.Router();
-router.post("/createblog", authenticate, restrict(["admin"]), creteBlog);
+router.post("/createblog", creteBlog);
 router.get("/getallblog", getAllBlogs);
 router.get("/getsingleblog/:id", getSingleBlog);
 router.delete("/deleteblog/:id", authenticate, deleteBlog);
