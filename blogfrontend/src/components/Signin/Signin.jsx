@@ -1,71 +1,60 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import { BASE_URL } from "../../utils/config";
-import './Register.css'; 
 
-const Register = () => {
+const Signin = () => {
   const [credentials, setCredentials] = useState({
-    name: undefined,
     email: undefined,
-    phone: undefined,
     password: undefined,
   });
-
-  const navigate = useNavigate();
-
+  const { dispatch } = useContext(AuthContext);
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
+    dispatch({ type: "LOGIN_START" });
     try {
-      const res = await fetch(`${BASE_URL}/auth/registerUser`, {
+      const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
-        headers: { "Content-type": "application/json" },
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
         body: JSON.stringify(credentials),
       });
       const result = await res.json();
       if (!result.ok) {
         console.log(result.message);
       }
-      navigate("/signin");
+      console.log("Login sucessfully done");
+      // console.log(result.data);
+      dispatch({
+        type: "LOGIN-SUCCESS",
+        user: result.data,
+        token: result.token,
+        role: result.role,
+      });
     } catch (error) {
-      // console.log(error);
+      dispatch({ type: "LOGIN-FAILURE", payload: error.message });
+      console.log(error);
     }
   };
-
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h3 className="card-title text-center mb-4">Create your account</h3>
+              <h3 className="card-title text-center mb-4">Login</h3>
               <form onSubmit={handleClick}>
-                <div className="form-group mb-3">
-                  <input
-                    type="text"
-                    id="name"
-                    placeholder="Enter your name"
-                    className="form-control"
-                    onChange={handleChange}
-                  />
-                </div>
                 <div className="form-group mb-3">
                   <input
                     type="email"
                     id="email"
                     placeholder="Enter your email"
-                    className="form-control"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group mb-3">
-                  <input
-                    type="text"
-                    id="phone"
-                    placeholder="Enter your phone number"
                     className="form-control"
                     onChange={handleChange}
                   />
@@ -79,9 +68,9 @@ const Register = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <button className="btn btn-primary w-100">Register</button>
+                <button className="btn btn-primary w-100">Login</button>
                 <p className="text-center mt-3">
-                  Already have an account? <Link to="/signin">Signin</Link>
+                  Don't have an account? <Link to="/register">Register</Link>
                 </p>
               </form>
             </div>
@@ -92,4 +81,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signin;
