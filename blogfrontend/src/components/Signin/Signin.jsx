@@ -9,6 +9,7 @@ const Signin = () => {
     password: undefined,
   });
   const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
@@ -37,6 +38,7 @@ const Signin = () => {
         token: result.token,
         role: result.role,
       });
+      navigate("/");
     } catch (error) {
       dispatch({ type: "LOGIN-FAILURE", payload: error.message });
       console.log(error);

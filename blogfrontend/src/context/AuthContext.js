@@ -38,6 +38,14 @@ const AuthReducer = (state, action) => {
         loading: false,
         error: action.payload,
       };
+    case "LOGOUT":
+      return {
+        user: null,
+        token: null,
+        role: null,
+        loading: false,
+        error: null,
+      };
     default:
       return state;
   }
@@ -45,7 +53,7 @@ const AuthReducer = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initial_state);
-// console.log(state);
+  // console.log(state);
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
     localStorage.setItem("token", state.token);
